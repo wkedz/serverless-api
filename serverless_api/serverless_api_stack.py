@@ -37,7 +37,11 @@ class ServerlessApiStack(Stack):
         empl_table.grant_read_write_data(empl_lambda)
 
         api = aws_apigateway.RestApi(self, "Empl-Api")
-        empl_resource = api.root.add_resource("empl")
+        cors_options = aws_apigateway.CorsOptions(
+            allow_origins=aws_apigateway.Cors.ALL_ORIGINS,
+            allow_methods=["GET", "POST"],
+        )
+        empl_resource = api.root.add_resource("empl", default_cors_preflight_options=cors_options)
 
         empl_lambda_intergation = aws_apigateway.LambdaIntegration(empl_lambda)
         empl_resource.add_method("GET", empl_lambda_intergation)

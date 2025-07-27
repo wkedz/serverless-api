@@ -18,6 +18,11 @@ def handler(event, context):
         return {
             "statusCode": 200,
             "body": json.dumps({"id": item["id"]}),
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Methods": "GET, POST"
+            }
         }
     if method == "GET":
         empl_id = event['queryStringParameters']['id']
@@ -35,4 +40,9 @@ def handler(event, context):
             return {
                 "statusCode": 404,
                 "body": json.dumps("Not found"),
+                "headers": {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "Content-Type",
+                    "Access-Control-Allow-Methods": "GET, POST"
+                }
             }
